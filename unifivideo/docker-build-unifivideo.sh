@@ -3,6 +3,6 @@ if [[ "$UID" -ne "0" ]]; then
   exit 1
 fi
 
-VERSION=3.10.6
+VERSION=3.10.10
 
 docker build --build-arg UVVERSION=$VERSION -t unifivideo:$VERSION .
