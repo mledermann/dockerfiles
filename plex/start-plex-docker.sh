@@ -10,7 +10,7 @@ if [[ -z "$PLEX_IP" ]]; then
   exit 1
 fi
 
-PLEX_VERSION=1.18.6.2368-97add474d
+PLEX_VERSION=1.18.7.2457-77cb9455c
 
 docker run \
 -d \
