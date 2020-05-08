@@ -1,7 +1,7 @@
 ID=`id -u`
 
-if [[ "$ID" -ne "0" ]]; then
-  echo "Must run as user root"
+if [[ ! $(groups | grep docker) ]]; then
+  echo "User must be in the 'docker' group"
   exit 1
 fi
 
@@ -9,8 +9,7 @@ if [[ -z "$PLEX_IP" ]]; then
   echo "Must set PLEX_IP to the ip to connect to"
   exit 1
 fi
-
-PLEX_VERSION=1.18.7.2457-77cb9455c
+PLEX_VERSION=1.19.3.2764-ef515a800
 
 docker run \
 -d \
