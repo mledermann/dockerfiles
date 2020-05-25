@@ -1,7 +1,7 @@
-if [[ "$UID" -ne "0" ]]; then
-  echo "MUST BE RUN AS ROOT"
-  exit 1
-fi
+#if [[ "$UID" -ne "0" ]]; then
+#  echo "MUST BE RUN AS ROOT"
+#  exit 1
+#fi
 
 docker run --init -dit --restart unless-stopped \
   --privileged \
@@ -12,4 +12,4 @@ docker run --init -dit --restart unless-stopped \
   -v /home/unifi-video/unifi-video:/var/lib/unifi-video:z \
   -v /home/unifi-video/logs:/var/lib/unifi-video/logs:z \
   -v /media/lib/unifi-video/videos:/var/lib/unifi-video/videos:z \
-  --name unifivideo unifivideo:3.10.10
+  --name unifivideo unifivideo:3.10.12
