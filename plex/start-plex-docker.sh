@@ -9,7 +9,7 @@ if [[ -z "$PLEX_IP" ]]; then
   echo "Must set PLEX_IP to the ip to connect to"
   exit 1
 fi
-PLEX_VERSION=1.19.3.2764-ef515a800
+PLEX_VERSION=1.19.3.2843-e3c1f7bcd
 
 docker run \
 -d \
