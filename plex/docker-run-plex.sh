@@ -15,7 +15,8 @@ if [[ -z "$PLEX_CLAIM" ]]; then
   exit 1
 fi
 
-PLEX_VERSION=1.25.8.5663-e071c3d62
+#PLEX_VERSION=1.25.8.5663-e071c3d62
+PLEX_VERSION=latest
 
 docker run \
 -d \
