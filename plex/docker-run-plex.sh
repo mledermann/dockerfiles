@@ -6,13 +6,19 @@ if [[ ! $(groups | grep docker) ]]; then
 fi
 
 if [[ -z "$PLEX_IP" ]]; then
-  echo "Must set PLEX_IP to the ip to connect to"
-  exit 1
+  PLEX_IP=`hostname -i`
+  if [ "$PLEX_IP" == "::1%1 127.0.0.1" ]; then
+    echo "Must set PLEX_IP to the ip to connect to"
+    exit 1
+  fi
 fi
 
 if [[ -z "$PLEX_CLAIM" ]]; then
-  echo "Must set PLEX_CLAIM. Go to https://www.plex.tv/claim for code"
-  exit 1
+  PLEX_CLAIM_PARAM=""
+  # echo "Must set PLEX_CLAIM. Go to https://www.plex.tv/claim for code"
+  # exit 1
+else
+  PLEX_CLAIM_PARAM=" -e PLEX_CLAIM=$PLEX_CLAIM "
 fi
 
 #PLEX_VERSION=1.25.8.5663-e071c3d62
@@ -35,8 +41,7 @@ docker run \
 -e ADVERTISE_IP="http://${PLEX_IP}:32400/" \
 -e PLEX_UID=1002 \
 -e PLEX_GID=1002 \
--e CHANGE_CONFIG_DIR_OWNERSHIP=false \
--e PLEX_CLAIM=$PLEX_CLAIM \
+-e CHANGE_CONFIG_DIR_OWNERSHIP=false $PLEX_CLAIM_PARAM \
 -h PlexServer \
 -v /home/plex/plexmediaserver:/config:z \
 -v /home/plex/tmp:/transcode:z \
