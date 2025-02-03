@@ -39,12 +39,13 @@ docker run \
 -p 32414:32414/udp \
 -e TZ="America/Chicago" \
 -e ADVERTISE_IP="http://${PLEX_IP}:32400/" \
--e PLEX_UID=1002 \
--e PLEX_GID=1002 \
+-e PLEX_UID=1001 \
+-e PLEX_GID=1001 \
 -e CHANGE_CONFIG_DIR_OWNERSHIP=false $PLEX_CLAIM_PARAM \
 -h PlexServer \
 -v /home/plex/plexmediaserver:/config:z \
 -v /home/plex/tmp:/transcode:z \
 -v /media/lib:/media/lib:z \
+--device=/dev/dri:/dev/dri \
 plexinc/pms-docker:$PLEX_VERSION
 

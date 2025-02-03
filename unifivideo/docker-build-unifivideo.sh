@@ -3,6 +3,6 @@
 #  exit 1
 #fi
 
-VERSION=3.10.12
+VERSION=3.10.13
 
 docker build --build-arg UVVERSION=$VERSION -t unifivideo:$VERSION .

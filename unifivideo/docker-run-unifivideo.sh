@@ -12,4 +12,4 @@ docker run --init -dit --restart unless-stopped \
   -v /home/unifi-video/unifi-video:/var/lib/unifi-video:z \
   -v /home/unifi-video/logs:/var/lib/unifi-video/logs:z \
   -v /media/lib/unifi-video/videos:/var/lib/unifi-video/videos:z \
-  --name unifivideo unifivideo:3.10.12
+  --name unifivideo unifivideo:3.10.13
