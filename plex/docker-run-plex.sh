@@ -24,6 +24,27 @@ fi
 #PLEX_VERSION=1.25.8.5663-e071c3d62
 PLEX_VERSION=latest
 
+echo 'Checking for new version of plex'
+docker pull plexinc/pms-docker:$PLEX_VERSION
+
+plex_running=`docker ps | grep plex | wc -l`
+
+if [[ "$plex_running" -ne "0" ]]; then
+  echo 'Stopping plex'
+  docker stop plex
+  echo 'Plex stopped'
+fi
+
+
+plex_exists=`docker ps -all | grep plex | wc -l`
+
+if [[ "$plex_exists" -ne "0" ]]; then
+  echo 'Removing old plex container'
+  docker rm plex
+  echo 'Old plex removed'
+fi
+
+echo 'Starting plex'
 docker run \
 -d \
 --restart unless-stopped \
