@@ -36,7 +36,7 @@ if [[ "$plex_running" -ne "0" ]]; then
 fi
 
 
-plex_exists=`docker ps -all | grep plex | wc -l`
+plex_exists=`docker ps --all | grep plex | wc -l`
 
 if [[ "$plex_exists" -ne "0" ]]; then
   echo 'Removing old plex container'
