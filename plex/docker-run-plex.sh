@@ -30,6 +30,14 @@ docker pull plexinc/pms-docker:$PLEX_VERSION
 plex_running=`docker ps | grep plex | wc -l`
 
 if [[ "$plex_running" -ne "0" ]]; then
+  running_id=`docker inspect --format json plex | jq '.[0] | .Image'`
+  latest_id=`docker image inspect --format json plexinc/pms-docker:$PLEX_VERSION | jq '.[0] | .Id'`
+  if [[ "$running_id" == "$latest_id" ]]; then
+    echo "Plex already at latest version ${running_id}"
+    exit
+  fi
+  echo "Updating plex to latest version ${latest_id} from ${running_id}"
+
   echo 'Stopping plex'
   docker stop plex
   echo 'Plex stopped'
@@ -67,6 +75,7 @@ docker run \
 -v /home/plex/plexmediaserver:/config:z \
 -v /home/plex/tmp:/transcode:z \
 -v /media/lib:/media/lib:z \
+-v /media/dvr:/media/dvr:z \
 --device=/dev/dri:/dev/dri \
 plexinc/pms-docker:$PLEX_VERSION
 
