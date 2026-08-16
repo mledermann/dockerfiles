@@ -1,0 +1,19 @@
+[Unit]
+Description=Immich backup to NAS (/mnt/backups)
+Documentation=https://docs.immich.app/administration/backup-and-restore/
+After=network-online.target docker.service mnt-backups.mount
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/immich-backup.sh
+
+# The dump and the sync are both I/O heavy and neither is urgent.
+Nice=10
+IOSchedulingClass=idle
+
+# A stalled CIFS share should fail the run, not wedge the timer forever.
+TimeoutStartSec=4h
+
+[Install]
+WantedBy=multi-user.target

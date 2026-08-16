@@ -1,0 +1,15 @@
+[Unit]
+Description=Nightly Immich S3 backup
+
+[Timer]
+# 03:30 America/Chicago. Immich dumps at 21:00 local and immich-backup.timer
+# takes the NAS copy at 22:30; this runs last, leaving five hours of slack so
+# a slow NAS run (4h timeout) can't still be hammering the same disks.
+OnCalendar=*-*-* 03:30:00
+RandomizedDelaySec=15m
+
+# If the machine was asleep at 03:30, run once it comes back up.
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=Nightly Immich backup to NAS
+
+[Timer]
+# 22:30 America/Chicago - after Immich's own 21:00 local database dump,
+# and well clear of it if that job runs long.
+OnCalendar=*-*-* 22:30:00
+# Run on next boot if the machine was off when the timer was due.
+Persistent=true
+RandomizedDelaySec=10m
+
+[Install]
+WantedBy=timers.target

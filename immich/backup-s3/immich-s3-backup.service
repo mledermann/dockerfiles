@@ -1,0 +1,30 @@
+[Unit]
+Description=Back up Immich photo library to S3
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=mark
+Group=immich
+ExecStart=/usr/local/bin/immich-s3-backup.sh --prune
+
+# A 18G first upload can take a while; don't let systemd kill it mid-transfer.
+TimeoutStartSec=6h
+
+# Backups should not compete with interactive use of the machine.
+Nice=10
+IOSchedulingClass=idle
+
+# The job only ever needs to read the library and talk to the network.
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/mark/.local/state/immich-s3-backup
+# The CLI writes the assumed-role credentials here. Without this hole in
+# ProtectHome the role can be assumed but not cached, and the run dies.
+ReadWritePaths=/home/mark/.aws/cli/cache
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

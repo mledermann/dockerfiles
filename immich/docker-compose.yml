@@ -16,6 +16,9 @@ services:
     # extends:
     #   file: hwaccel.transcoding.yml
     #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
+    # Run as the dedicated `immich` host user so files under UPLOAD_LOCATION are
+    # owned by that user rather than root. See IMMICH_UID/IMMICH_GID in .env.
+    user: '${IMMICH_UID:-1003}:${IMMICH_GID:-1003}'
     volumes:
       # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
       - ${UPLOAD_LOCATION}:/data

@@ -1,0 +1,13 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowBackupUserToAssume",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::816269513269:user/immich-backup"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
