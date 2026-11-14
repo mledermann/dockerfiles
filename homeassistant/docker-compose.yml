@@ -1,0 +1,25 @@
+name: homeassistant
+
+services:
+  matter-server:
+    container_name: matter-server
+    image: ghcr.io/matter-js/matterjs-server:${MATTER_VERSION:-latest}
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /home/mark/data/matter-js:/data
+
+  homeassistant:
+    container_name: homeassistant
+    image: homeassistant/home-assistant:${HA_VERSION:-stable}
+    restart: unless-stopped
+    stdin_open: true   # -i
+    tty: true          # -t
+    ports:
+      - "8123:8123"
+      - "8989:8989"
+    environment:
+      PYWEMO_CALLBACK_ADDRESS: "192.168.0.31:8989"
+      TZ: America/Chicago
+    volumes:
+      - /home/mark/data/homeassistant/config:/config:z
