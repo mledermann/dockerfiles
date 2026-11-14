@@ -1,0 +1,33 @@
+name: plex
+
+services:
+  plex:
+    container_name: plex
+    image: plexinc/pms-docker:${PLEX_VERSION:-latest}
+    restart: unless-stopped
+    hostname: PlexServer
+    ports:
+      - "32400:32400/tcp"
+      - "3005:3005/tcp"
+      - "8324:8324/tcp"
+      - "32469:32469/tcp"
+      - "1900:1900/udp"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
+    environment:
+      TZ: America/Chicago
+      ADVERTISE_IP: "http://${PLEX_IP:?Set PLEX_IP to the IP clients connect to}:32400/"
+      PLEX_UID: "1001"
+      PLEX_GID: "1001"
+      CHANGE_CONFIG_DIR_OWNERSHIP: "false"
+      # Empty is ignored by the image. Get a code at https://www.plex.tv/claim
+      PLEX_CLAIM: ${PLEX_CLAIM:-}
+    volumes:
+      - /home/plex/plexmediaserver:/config:z
+      - /home/plex/tmp:/transcode:z
+      - /media/lib:/media/lib:z
+      - /media/dvr:/media/dvr:z
+    devices:
+      - /dev/dri:/dev/dri
